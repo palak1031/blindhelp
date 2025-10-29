@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Vision Hub - For Blind and Visually Impaired</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            transition: background 0.3s ease;
+        }
+        .dark-mode {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Accessibility: Skip Link */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            background: #007bff;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+        .skip-link:focus {
+            left: 10px;
+            top: 10px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+        .dark-mode header {
+            background: rgba(44, 62, 80, 0.9);
+            color: #ecf0f1;
+        }
+        header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .dark-mode header h1 {
+            color: #ecf0f1;
+        }
+        header p {
+            font-size: 1.2em;
+            color: #7f8c8d;
+        }
+        .dark-mode header p {
+            color: #bdc3c7;
+        }
+
+        /* Navigation */
+        nav {
+            background: #3498db;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        nav a:hover, nav a:focus {
+            background: #2980b9;
+        }
+
+        /* Main Content */
+        main {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.8s ease-out;
+        }
+        .dark-mode section {
+            background: rgba(44, 62, 80, 0.9);
+            color: #ecf0f1;
+        }
+        section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        .dark-mode section h2 {
+            color: #ecf0f1;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .testimonial {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+            font-style: italic;
+        }
+        .dark-mode .testimonial {
+            background: #34495e;
+            color: #ecf0f1;
+        }
+        .testimonial cite {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        /* Resources List */
+        .resources ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .resources li {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .dark-mode .resources li {
+            background: #34495e;
+        }
+        .resources li:hover {
+            transform: translateY(-5px);
+        }
+        .resources a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .resources a:hover {
+            text-decoration: underline;
+        }
+
+        /* Audio Player */
+        .audio-player {
+            margin: 20px 0;
+        }
+        audio {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        /* Contact Form */
+        form {
+            display: grid;
+            gap: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, textarea {
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .dark-mode input, .dark-mode textarea {
+            background: #34495e;
+            color: #ecf0f1;
+            border-color: #7f8c8d;
+        }
+        button {
+            padding: 12px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #2ecc71;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* Dark Mode Toggle */
+        .toggle-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+        }
+        .toggle-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .toggle-btn:hover {
+            background: #2980b9;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Dark Mode Toggle -->
+    <div class="toggle-container">
+        <button class="toggle-btn" id="darkModeToggle">Toggle Dark Mode</button>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Accessible Vision Hub</h1>
+            <p>We're here to support you on your journey. Discover audio guides, braille tools, and a community that feels like home—because everyone deserves to feel seen and heard.</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#testimonials">Stories</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <main id="main-content">
+            <section id="about">
+                <h2>About Us</h2>
+                <p>At Accessible Vision Hub, we believe in the power of connection and independence. Founded by people who've walked this path, we're passionate about creating a space where blind and visually impaired individuals can thrive. From heartfelt audio stories to practical braille tips, we're here to make life a little easier and a lot more joyful.</p>
+                <img src="https://via.placeholder.com/400x200/3498db/ffffff?text=Vision+Hub+Logo" alt="Vision Hub logo: A warm, stylized eye with sound waves and a heart, symbolizing empathy, accessibility, and community support.">
+            </section>
+
+            <section id="testimonials" class="testimonials">
+                <h2>Real Stories from Our Community</h2>
+                <div class="testimonial">
+                    <p>"This hub changed my world. The audio books helped me rediscover my love for reading, and the forums connected me with friends who truly understand."</p>
+                    <cite>- Sarah, 45, avid reader</cite>
+                </div>
+                <div class="testimonial">
+                    <p>"Learning braille here felt personal, not just instructional. It's like having a kind mentor guiding you every step."</p>
+                    <cite>- Michael, 32, tech enthusiast</cite>
+                </div>
+                <div class="testimonial">
+                    <p>"I never felt alone until I found this community. Their support is like a warm hug on tough days."</p>
+                    <cite>- Elena, 28, artist</cite>
+                </div>
+            </section>
+
+            <section id="resources" class="resources">
+                <h2>Resources Tailored for You</h2>
+                <ul>
+                    <li><a href="#audio-books">Audio Books Library</a> - Immerse yourself in stories narrated with heart and care.</li>
+                    <li><a href="#braille-tools">Braille Tools & Tutorials</a> - Gentle, step-by-step guides to empower your independence.</li>
+                    <li><a href="#community">Community Forums</a> - Share laughs, advice, and support in a welcoming space.</li>
+                </ul>
+                <!-- Sample Audio Player -->
+                <div class="audio-player">
+                    <h3>Relaxing Audio Guide: A Gentle Walk in the Park</h3>
+                    <p>Take a moment to unwind with this soothing narration.</p>
+                    <audio controls>
+                        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+                        Your browser does not support the audio element. <a href="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav">Download audio</a>
+                    </audio>
+                </div>
+            </section>
+
+            <section id="contact">
+                <h2>Reach Out to Us</h2>
+                <p>Have a question, a story to share, or just need someone to listen? We're here for you—drop us a line, and we'll respond with care.</p>
+                <form id="contactForm">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" required aria-describedby="nameHelp">
+                    <small id="nameHelp" class="sr-only">Share your name so we can address you personally.</small>
+
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" required aria-describedby="emailHelp">
+                    <small id="emailHelp" class="sr-only">Provide your email for a thoughtful reply.</small>
+
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" rows="5" required aria-describedby="messageHelp"></textarea>
+                    <small id="messageHelp" class="sr-only">Tell us what's on your mind—we're listening.</small>
+
+                    <button type="submit">Send with Care</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Accessible Vision Hub. Built with empathy for every user. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Dark Mode Toggle
+        const toggleBtn = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            toggleBtn.textContent = body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+        });
+
+        // Form Validation and Submission
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (name && email && message) {
+                alert(`Thank you, ${name}! Your message means a lot to us. We'll get back to you soon.`);
+                form.reset();
+            } else {
+                alert('Please fill in all fields so we can help you better.');
+            }
+        });
+
+        // Smooth Scrolling for Nav Links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
